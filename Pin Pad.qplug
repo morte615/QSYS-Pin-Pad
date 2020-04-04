@@ -3,22 +3,22 @@
 --Website: http://dragonsfiredesign.com
 --Build Date: 04/2020
 
-PluginInfo = 
+PluginInfo =
 {
 	Name = "PIN Pad",
-	Version = "0.2",
+	Version = "0.2.1",
 	Id = "671df5b9-e296-44a3-b381-4bcc062d9353",
 	Description = "Pin Pad - Build With script",
 	ShowDebug = true,
 }
-function GetProperties() 
-	props = { 
+function GetProperties()
+	props = {
 		{
 			Name = "Number of PINs",
 			Type = "integer",
-			Min = 1,
-			Max = 100,  
-			Value = 3,
+			Min = 0,
+			Max = 100,
+			Value = 1,
 		},
 		{
 			Name = "Log Entries",
@@ -30,19 +30,18 @@ function GetProperties()
 end
 
 function GetControls(props)
-  local ch_count = props["Number of PINs"].Value
   return {
 		{
-			Name = "code", 
+			Name = "code",
 			ControlType = "Text",
 			PinStyle = "Input",
-			Count = 1 
+			Count = 1
 		},
 		{
 			Name = "PinNum",
 			ControlType = "Button",
 			ButtonType = "Trigger",
-			Count = 10, 
+			Count = 10,
 			--PinStyle = "Both",
 			UserPin = true,
 		},
@@ -50,7 +49,7 @@ function GetControls(props)
 			Name = "Reset",
 			ControlType = "Button",
 			ButtonType = "Trigger",
-			Count = 1, 
+			Count = 1,
 			PinStyle = "Both",
 			UserPin = true,
 		},
@@ -58,7 +57,7 @@ function GetControls(props)
 			Name = "Submit",
 			ControlType = "Button",
 			ButtonType = "Trigger",
-			Count = 1, 
+			Count = 1,
 			PinStyle = "Both",
 			UserPin = true,
 		},
@@ -66,7 +65,7 @@ function GetControls(props)
 			Name = "Logoff",
 			ControlType = "Button",
 			ButtonType = "Trigger",
-			Count = 1, 
+			Count = 1,
 			PinStyle = "Both",
 			UserPin = true,
 			IconType = "Image",
@@ -75,7 +74,7 @@ function GetControls(props)
 		{
 			Name = "UCI",
 			ControlType = "Text",
-			Count = 1, 
+			Count = 1,
 			UserPin = true,
 			PinStyle = "Output",
 		},
@@ -87,20 +86,21 @@ function GetControls(props)
 		{
 			Name = "Pins",
 			ControlType = "Text",
-			Count = ch_count,
+			Count = props["Number of PINs"].Value,
 		},
 		{
 			Name = "Pages",
 			ControlType = "Text",
-			Count = ch_count,
+			Count = props["Number of PINs"].Value,
 		},
 		{
 			Name = "Timeout", --Timeout in Seconds--
 			ControlType = "Knob",
 			ControlUnit = "Seconds",
 			Min = 0,
-			Max = 99999,
+			Max = 86400,
 			Value = 60,
+			Count = 1,
 		}
 	}
 end
@@ -113,16 +113,15 @@ function GetPages()
 end
 
 function GetControlLayout(props)
-	local ch_count = props["Number of PINs"].Value
 	local layout = {}
 	local graphics = {}
 --	layout.code = {PrettyName="code",Style="Text",Position={1,11},Size={1,1},IsInvisible = true} -- This is to draw a code pin
-	
+
 	if props['page_index'].Value==1 then
   local font = "Noto Serif"
   local fontstyle = "Bold"
   local fontsize = 30
-	
+
 	layout["PinNum 1"] = {
 			Style = "Button",
 			Legend = "1",
@@ -300,7 +299,7 @@ function GetControlLayout(props)
 		},
 	}
 	return layout,graphics;
-	
+
 elseif props['page_index'].Value==2 then
 		layout["Lock Page"] = {
 			Style = "Text",
@@ -319,15 +318,16 @@ elseif props['page_index'].Value==2 then
 			Size = { 36,129 },
 			ShowTextbox = true,
 		}
-		for i=1,ch_count do
-			layout["Pins "..i] = {
+		for i=1,props["Number of PINs"].Value do
+			local ctl = tostring(props["Number of PINs"].Value==1 and "" or " "..i)
+			layout["Pins"..ctl] = {
 				Style = "Text",
 				Position = { 75,72+(i*29) },
 				Size = { 100,29 },
 				Radius = 3,
 				Margin = 2,
 			}
-			layout["Pages "..i] = {
+			layout["Pages"..ctl] = {
 				Style = "Text",
 				Position = { 178,72+(i*29) },
 				Size = { 100,29 },
@@ -335,7 +335,7 @@ elseif props['page_index'].Value==2 then
 				Margin = 2,
 			}
 		end
-		
+
 		local graphics = {
 		{
 			Type = "Label",
@@ -380,7 +380,7 @@ elseif props['page_index'].Value==2 then
 	}
 	return layout,graphics;
 	end --End If
-	
+
 end --end Function
 
 if Controls then
@@ -438,10 +438,10 @@ function wrong() --Reset if incorrect pin
   for i in ipairs(Controls["PinNum"]) do
     Controls["PinNum"][i].Color = "Red"
   end --Change Pin Pad color to red briefly
-  Timer.CallAfter(function() 
+  Timer.CallAfter(function()
     for i in ipairs(Controls["PinNum"]) do
-      Controls["PinNum"][i].Color = "" 
-    end 
+      Controls["PinNum"][i].Color = ""
+    end
     Controls["UCI"].String = Controls["Lock Page"].String
     touchTimer:Stop()
   end ,.35)  --Reset Pin Pad color and Controls["Lock Page"].String after delay
