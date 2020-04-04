@@ -6,7 +6,7 @@
 PluginInfo =
 {
 	Name = "PIN Pad",
-	Version = "0.2.1",
+	Version = "0.2.2",
 	Id = "671df5b9-e296-44a3-b381-4bcc062d9353",
 	Description = "Pin Pad - Build With script",
 	ShowDebug = true,
@@ -16,7 +16,7 @@ function GetProperties()
 		{
 			Name = "Number of PINs",
 			Type = "integer",
-			Min = 0,
+			Min = 1,
 			Max = 100,
 			Value = 1,
 		},
@@ -385,7 +385,7 @@ end --end Function
 
 if Controls then
 --Code--
-	pass = {}
+pass = {}
 ongoing = null
 touchTimer = Timer.New()
 
@@ -393,23 +393,31 @@ for i in ipairs(Controls["PinNum"]) do
 Controls["PinNum"][i].EventHandler = function() lock(i) end  --Assign EventHandler to inputs
 end
 
-for i in ipairs(Controls["Pins"]) do
-  Controls["Pins"][i].EventHandler = function() BuildPass() end
-end
-
-for i in ipairs(Controls["Pages"]) do
-print(i)
-  Controls["Pages"][i].EventHandler = function() BuildPass() end
+if Properties["Number of PINs"].Value==1 then 
+	Controls["Pins"].EventHandler = function() BuildPass() end
+	Controls["Pages"].EventHandler = function() BuildPass() end
+else
+	for i in ipairs(Controls["Pins"]) do
+		Controls["Pins"][i].EventHandler = function() BuildPass() end
+		Controls["Pages"][i].EventHandler = function() BuildPass() end
+	end
 end
 
 Controls["Submit"].EventHandler = function() solve() end --Check Combo
-Controls["Logoff"].EventHandler = function() Controls["UCI"].String = Controls["Lock Page"].String end --Return to Lock Page (Logoff Button)
+Controls["Logoff"].EventHandler = function() 
+	Controls["UCI"].String = Controls["Lock Page"].String
+	touchTimer:Stop()
+ end --Return to Lock Page (Logoff Button)
 
 function BuildPass()
-  for i,v in ipairs(Controls["Pins"]) do
-    pass[v.String] = Controls["Pages"][i].String
---    print("Index: "..i, "Value: "..v.String, "Pass: "..pass[v.String]) --Debug
-  end
+	if Properties["Number of PINs"].Value==1 then 
+		pass[Controls["Pins"].String] = Controls["Pages"].String
+	else
+  		for i,v in ipairs(Controls["Pins"]) do
+    		pass[v.String] = Controls["Pages"][i].String
+--   		print("Index: "..i, "Value: "..v.String, "Pass: "..pass[v.String]) --Debug
+  		end
+  	end
 end
 
 function lock(current) --Parses the inputs
@@ -449,12 +457,14 @@ end
 Controls["Reset"].EventHandler = function() wrong() end --Reset Combo
 
 touchTimer.EventHandler = function()
+  print("System Locked due to Timeout")
   Controls.UCI.String = Controls["Lock Page"].String
   touchTimer:Stop()
 end
 
 --Script Startup--
-BuildPass()
-Controls["UCI"].String = Controls["Lock Page"].String
---End Code--
+	BuildPass()
+	Controls["UCI"].String = Controls["Lock Page"].String
+
+	--End Code--
 end
