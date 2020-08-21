@@ -6,7 +6,7 @@
 PluginInfo =
 {
 	Name = "PIN Pad",
-	Version = "0.2.2",
+	Version = "0.2.4",
 	Id = "671df5b9-e296-44a3-b381-4bcc062d9353",
 	Description = "Pin Pad - Build With script",
 	ShowDebug = true,
@@ -35,7 +35,15 @@ function GetControls(props)
 			Name = "code",
 			ControlType = "Text",
 			PinStyle = "Input",
-			Count = 1
+			Count = 1,
+		},
+				{
+			Name = "Touch Activity",
+			ControlType = "Indicator",
+			IndicatorType = "LED",
+			PinStyle = "Input",
+			Count = 1,
+			userpin = true,
 		},
 		{
 			Name = "PinNum",
@@ -252,7 +260,7 @@ function GetControlLayout(props)
 			FontStyle = fontstyle,
 			FontSize = fontsize,
 		}
-		layout["Reset"] = {
+	layout["Reset"] = {
 			Style = "Button",
 			Legend = "Reset",
 			ButtonStyle = "Trigger",
@@ -265,7 +273,7 @@ function GetControlLayout(props)
 			FontStyle = fontstyle,
 			FontSize = fontsize,
 		}
-		layout["Submit"] = {
+	layout["Submit"] = {
 			Style = "Button",
 			Legend = "Submit",
 			ButtonStyle = "Trigger",
@@ -278,7 +286,7 @@ function GetControlLayout(props)
 			FontStyle = fontstyle,
 			FontSize = fontsize,
 		}
-		layout["Logoff"] = {
+	layout["Logoff"] = {
 			Style = "Button",
 			ButtonStyle = "Trigger",
 			UserPin = true,
@@ -311,6 +319,11 @@ elseif props['page_index'].Value==2 then
 			Position = { 100,29 },
 			Size = { 172,23 },
 			IsReadOnly = true,
+		}
+		layout["Touch Activity"] = {
+			Style = "LED",
+			Position = { 0,0 },
+			Size = { 16,16 },
 		}
 		layout["Timeout"] = {
 			Style = "Fader",
@@ -408,6 +421,14 @@ Controls["Logoff"].EventHandler = function()
 	Controls["UCI"].String = Controls["Lock Page"].String
 	touchTimer:Stop()
  end --Return to Lock Page (Logoff Button)
+Controls["Touch Activity"].EventHandler = function()
+	if Controls["Touch"].Boolean == true then
+		touchTimer:Stop() --Stop Timer
+	else
+		touchTimer:Stop() --Stop Timer
+		touchTimer:Start(Controls["Timeout"].Value) --Restart Timer
+	end
+end
 
 function BuildPass()
 	if Properties["Number of PINs"].Value==1 then 
