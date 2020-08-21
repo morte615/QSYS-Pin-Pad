@@ -2,7 +2,7 @@
 Pin Pad plugin for QSYS
 
 Author: Matt Drake
-Comapny: Dragon's Fire Design
+Company: Dragon's Fire Design
 Website: http://dragonsfiredesign.com
 Build Date: 04/2020
 
