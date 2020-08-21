@@ -1,5 +1,5 @@
 --Author: Matt Drake
---Comapny: Dragon's Fire Design
+--Company: Dragon's Fire Design
 --Website: http://dragonsfiredesign.com
 --Build Date: 04/2020
 
@@ -8,7 +8,7 @@ PluginInfo =
 	Name = "PIN Pad",
 	Version = "0.2.4",
 	Id = "671df5b9-e296-44a3-b381-4bcc062d9353",
-	Description = "Pin Pad - Build With script",
+	Description = "Pin Pad",
 	ShowDebug = true,
 }
 function GetProperties()
