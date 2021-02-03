@@ -6,7 +6,7 @@
 PluginInfo =
 {
 	Name = "PIN Pad",
-	Version = "0.2.9",
+	Version = "0.2.11",
 	Id = "671df5b9-e296-44a3-b381-4bcc062d9353",
 	Description = "Pin Pad",
 	ShowDebug = true,
@@ -320,11 +320,12 @@ elseif props['page_index'].Value==2 then
 			Size = { 172,23 },
 			IsReadOnly = true,
 		}
---		layout["Touch Activity"] = {
---			Style = "LED",
---			Position = { 0,0 },
---			Size = { 16,16 },
---		}
+		layout["Touch Activity"] = {
+			Style = "LED",
+			Position = { 0,0 },
+			Size = { 16,16 },
+			IsInvisible = true,
+		}
 		layout["Timeout"] = {
 			Style = "Fader",
 			Position = { 23,24 },
