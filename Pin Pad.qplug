@@ -433,6 +433,7 @@ Controls["Touch Activity"].EventHandler = function()
 end
 
 function BuildPass()
+	pass = {}
 	if Properties["Number of PINs"].Value==1 then 
 		pass[Controls["Pins"].String] = Controls["Pages"].String
 	else
