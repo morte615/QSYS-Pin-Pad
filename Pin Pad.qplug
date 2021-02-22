@@ -423,6 +423,7 @@ Controls["Logoff"].EventHandler = function()
 	touchTimer:Stop()
  end --Return to Lock Page (Logoff Button)
 Controls["Touch Activity"].EventHandler = function()
+	if Controls["Timeout"].Value == 0 then return end --If timeout is set to 0 then do nothing (IE Disabled)
 	if Controls["Touch Activity"].Boolean == true then
 		touchTimer:Stop() --Stop Timer
 		print("Touch Timer Stopped")
