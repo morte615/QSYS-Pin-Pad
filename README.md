@@ -15,7 +15,7 @@ Log Enteries: If Yes it will log anytime a pin is tested,
    if Pin Correct it will say which Page the user went too.
 
 To Use:
-Show UCI Pin on Plugin and link that to your UCI Viewer (either Page or UCI can be used)
-In Plugin on the Pages Page Add your Lock Page (the page it will return to when logged out)
+Show Nav Pin on Plugin and link that to your UCI Viewer (either Page or UCI can be used)
+In thePlugin on the Pages Page Add your Lock Page (the page it will return to when logged out)
 Then add the Pin number and it's corrasponding Page.
-Adjust the Timeout on the left for the Timeout, timer starts when page is loaded. 0 is Disabled
+Adjust the Timeout on the left for the Timeout, timer starts when Activity pin is activated, resets anytime it goes true. 0 is Disabled
