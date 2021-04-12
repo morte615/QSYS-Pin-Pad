@@ -6,7 +6,7 @@
 PluginInfo =
 {
 	Name = "PIN Pad",
-	Version = "0.2.11",
+	Version = "0.2.12",
 	Id = "671df5b9-e296-44a3-b381-4bcc062d9353",
 	Description = "Pin Pad",
 	ShowDebug = true,
