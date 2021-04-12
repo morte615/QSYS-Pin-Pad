@@ -15,7 +15,7 @@ Number of Pins: Choose how many Pin and Page combinations you want
    * If Pin Correct it will say which Page the user went too.
 
 To Use:
-*Show Nav Pin on Plugin and link that to your UCI Viewer (either Page or UCI can be used)
-*In thePlugin on the Pages Page Add your Lock Page (the page it will return to when logged out)
-*Then add the Pin number and it's corrasponding Page.
-*Adjust the Timeout on the left for the Timeout, timer starts when Activity pin is activated, resets anytime it goes true. 0 is Disabled
+* Show Nav Pin on Plugin and link that to your UCI Viewer (either Page or UCI can be used)
+* In thePlugin on the Pages Page Add your Lock Page (the page it will return to when logged out)
+* Then add the Pin number and it's corrasponding Page.
+* Adjust the Timeout on the left for the Timeout, timer starts when Activity pin is activated, resets anytime it goes true. 0 is Disabled
