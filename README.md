@@ -16,7 +16,7 @@ Number of Pins: Choose how many Pin and Page combinations you want
 
 To Use:
 * Show Nav Pin on Plugin and link that to your UCI Viewer (either Page or UCI can be used)
-* *Input side of the pin will also update if the page moves from using the UCI Viewer or Touch Screen. Do this to ensure system is in sync and to avoid bugs.
+* * Input side of the pin will also update if the page moves from using the UCI Viewer or Touch Screen. Do this to ensure system is in sync and to avoid bugs.
 * In the Plugin on the Pages Page Add your Lock Page (the page it will return to when logged out)
 * Then add the Pin number and it's corrasponding Page.
 * Adjust the Timeout on the left for the Timeout, timer starts when Activity pin is activated, resets anytime it goes true. 0 is Disabled
